@@ -6,4 +6,4 @@ In this project, I used JavaScript with Mapbox to create a map overlay of earthq
   <li>Interchangable map backgrounds.</li>
   <li>Legend in the bottom right corner that displays color codes by magnitude.</li>
 </ul>
-<img href="Map.PNG"></img>
+<img src="Map.PNG"></img>
