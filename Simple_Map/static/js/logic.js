@@ -15,10 +15,17 @@ let dark = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/
     accessToken: API_KEY
 });
 
+let sateliteStreets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v11/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    accessToken: API_KEY
+});
+
 // Create a base layer that holds both maps.
 let baseMaps = {
     Street: streets,
-    Dark: dark
+    Dark: dark,
+    "Satellite Streets": sateliteStreets
 };
 
 let map = L.map('mapid', {
@@ -35,9 +42,11 @@ streets.addTo(map);
 
 // Accessing the airport GeoJSON URL
 let airportData = "https://raw.githubusercontent.com/civond/Mapping_Earthquakes/main/majorAirports.json";
-
 // Accessing the Toronto airline routes GeoJSON URL.
 let torontoData = "https://raw.githubusercontent.com/civond/Mapping_Earthquakes/main/torontoRoutes.json";
+// Accessing the Toronto airline routes GeoJSON URL.
+let torontoHood = "https://raw.githubusercontent.com/civond/Mapping_Earthquakes/main/torontoNeighborhoods.json";
+
 
 // Grabbing our GeoJSON data.
 d3.json(airportData).then(function(data) {
@@ -54,7 +63,7 @@ d3.json(airportData).then(function(data) {
 });
 
 let LineStyle = {
-    color: "#ffffa1",
+    color: "#1FD1BE",
     cap: 'round',
     opacity: '.5',
     weight: '2'
@@ -72,6 +81,19 @@ d3.json(torontoData).then(function(data) {
         },
         style: LineStyle
     }).addTo(map);
+});
+
+//Toronto Neighborhoods
+d3.json(torontoHood).then(function(data) {
+    console.log(data);
+    L.geoJSON(data, {
+            opacity: '.5',
+            color: '#1F4BD1',
+            fillColor: 'yellow',
+            weight: '1'
+        }
+
+    ).addTo(map);
 });
 
 
